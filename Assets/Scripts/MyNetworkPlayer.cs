@@ -17,17 +17,8 @@ public class MyNetworkPlayer : NetworkBehaviour
         SetDisplayName(newDisplayName);
     }
 
-    [ContextMenu("Set My Name")]
-    public void SetMyName()
-    {
-        CmdSetDisplayName("My New Name");
-    }
-
-    [ClientRpc]
-    private void RpcLogNewName(string newDisplayName)
-    {
-        Debug.Log(newDisplayName);
-    }
+    [ContextMenu("Set My Name")] public void SetMyName() => CmdSetDisplayName("My New Name");
+    [ClientRpc] private void RpcLogNewName(string newDisplayName) => Debug.Log(newDisplayName);
 
 
     #region Server
