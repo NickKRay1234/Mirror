@@ -1,20 +1,45 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
-namespace Mirror.Examples.Benchmark
+namespace Mirror.Examples.Benchmark.Scripts
 {
     public class PlayerMovement : NetworkBehaviour
     {
-        public float speed = 5;
+        [SerializeField] private NavMeshAgent _agent = null;
+        private Camera _camera;
 
-        void Update()
+        #region Server
+
+        [Command]
+        private void Move(Vector3 position)
         {
-            if (!isLocalPlayer) return;
-
-            float h = Input.GetAxis("Horizontal");
-            float v = Input.GetAxis("Vertical");
-
-            Vector3 dir = new Vector3(h, 0, v);
-            transform.position += dir.normalized * (Time.deltaTime * speed);
+            if(!NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, NavMesh.AllAreas)) return;
+            _agent.SetDestination(hit.position);
         }
+
+        #endregion
+
+        #region Client
+
+        public override void OnStartAuthority()
+        {
+            base.OnStartAuthority();
+            _camera = Camera.main;
+        }
+
+        [ClientCallback]
+        private void Update()
+        {
+            if(!hasAuthority) return;
+            if (!Input.GetMouseButtonDown(1)) return;
+            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+            if(!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity)) return;
+            Move(hit.point);
+        }
+
+        #endregion
     }
+    
+    
+    
 }
