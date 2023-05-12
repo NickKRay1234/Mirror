@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Units
@@ -7,7 +6,7 @@ namespace Units
     public class UnitSelectionHandler : MonoBehaviour
     {
         private Camera _mainCamera;
-        private List<Unit> selectedUnits = new();
+        public List<Unit> SelectedUnits { get; } = new();
         [SerializeField] private LayerMask _layerMask = new LayerMask();
         
         private void Start() => _mainCamera = Camera.main;
@@ -16,11 +15,11 @@ namespace Units
         {
             if (Input.GetMouseButtonDown(0))
             {
-                foreach (Unit selectedUnit in selectedUnits)
+                foreach (Unit selectedUnit in SelectedUnits)
                 {
                     selectedUnit.Deselect();
                 }
-                selectedUnits.Clear();
+                SelectedUnits.Clear();
             }
             else if (Input.GetMouseButtonUp(0))
             {
@@ -36,9 +35,9 @@ namespace Units
             if (!hit.collider.TryGetComponent(out Unit unit)) return;
 
             if (!unit.hasAuthority) return;
-            selectedUnits.Add(unit);
+            SelectedUnits.Add(unit);
 
-            foreach (Unit selectedUnit in selectedUnits)
+            foreach (Unit selectedUnit in SelectedUnits)
                 selectedUnit.Select();
         }
     }
