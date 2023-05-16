@@ -9,6 +9,8 @@ namespace Networking
     {
         [SerializeField] private List<Unit> myUnits = new();
 
+        public List<Unit> GetMyUnits() => myUnits;
+
         public override void OnStartServer()
         {
             Unit.ServerOnUnitSpawned += ServerHandleUnitSpawned;

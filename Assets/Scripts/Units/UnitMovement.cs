@@ -9,6 +9,15 @@ namespace Mirror.Examples.Benchmark.Scripts
 
         #region Server
 
+
+        [ServerCallback]
+        private void Update()
+        {
+            if (!_agent.hasPath) return;
+            if (_agent.remainingDistance > _agent.stoppingDistance) return;
+            _agent.ResetPath();
+        }
+        
         [Command]
         public void Move(Vector3 position)
         {
