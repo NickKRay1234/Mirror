@@ -22,7 +22,8 @@ namespace Units
 
         private void Update()
         {
-            if (_player == null) _player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+            if (_player == null)
+                _player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
             if (Input.GetMouseButtonDown(0))
             {
                 StartSelectionArea();
@@ -68,11 +69,11 @@ namespace Units
             if (_unitSelectionArea.sizeDelta.magnitude == 0)
             {
                 Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-                if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _layerMask));
+                if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _layerMask)) {return;}
 
-                if (!hit.collider.TryGetComponent(out Unit unit)) return;
+                if (!hit.collider.TryGetComponent(out Unit unit)) {return;}
 
-                if (!unit.hasAuthority) return;
+                if (!unit.hasAuthority) {return;}
                 SelectedUnits.Add(unit);
 
                 foreach (Unit selectedUnit in SelectedUnits)

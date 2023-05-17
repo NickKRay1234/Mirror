@@ -5,9 +5,8 @@ namespace Combat
 {
     public class Targeter : NetworkBehaviour
     {
-        [SerializeField] private Targetable _target;
-
-        #region Server
+        private Targetable _target;
+        public Targetable GetTarget() => _target;
 
         [Command]
         public void CmdSetTarget(GameObject targetGameObject)
@@ -21,13 +20,5 @@ namespace Combat
         {
             _target = null;
         }
-        
-        #endregion
-
-        #region Client
-
-        
-
-        #endregion
     }
 }
