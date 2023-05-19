@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 398770028}
   - component: {fileID: 398770027}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -341,7 +341,7 @@ Transform:
   m_GameObject: {fileID: 398770026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 15, y: 0.5, z: 15}
+  m_LocalScale: {x: 40, y: 0.5, z: 40}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -805,14 +805,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016209491}
-  m_LocalRotation: {x: 0, y: 0.8990235, z: -0.4379004, w: 0}
-  m_LocalPosition: {x: 0, y: 6.2, z: 8}
+  m_LocalRotation: {x: 0, y: 0.7838561, z: -0.62094253, w: 0}
+  m_LocalPosition: {x: 0, y: 23.9, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 51.94, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 76.77, y: 180, z: 0}
 --- !u!114 &2016209495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -880,6 +880,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1147690868646961651, guid: 10450fe6ea5962f438c46032bf30e5dd, type: 3}
+      propertyPath: _gameOverHandlerPrefab
+      value: 
+      objectReference: {fileID: 3137422815163165375, guid: 7454ea218182d1649a85c8328a74ce55, type: 3}
     - target: {fileID: 1147690868646961652, guid: 10450fe6ea5962f438c46032bf30e5dd, type: 3}
       propertyPath: m_Name
       value: NetworkManager

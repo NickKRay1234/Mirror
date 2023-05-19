@@ -9,10 +9,11 @@ namespace Combat
         
         [SerializeField] private int _maxHealth = 100;
         
-        [SyncVar]
+        [SyncVar(hook = nameof(HandleHealthUpdated))]
         private int _currentHealth;
 
         public event Action ServerOnDie;
+        public event Action<int, int> ClientOnHealthUpdated;
 
         #region Server
 
@@ -26,8 +27,7 @@ namespace Combat
             _currentHealth = Mathf.Max(_currentHealth - damageAmount, 0);
             if (_currentHealth != 0) return;
             
-            //ServerOnDie?.Invoke();
-            Debug.Log("We Died");
+            ServerOnDie?.Invoke();
         }
         
         #endregion
@@ -35,6 +35,12 @@ namespace Combat
 
         #region Client
 
+        private void HandleHealthUpdated(int oldHealth, int newHealth)
+        {
+            ClientOnHealthUpdated?.Invoke(newHealth, _maxHealth);
+        }
+        
+        
         #endregion
     }
 }

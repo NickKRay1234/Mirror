@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Mirror;
 using Networking;
@@ -18,6 +19,17 @@ namespace Units
         private void Start()
         {
             _mainCamera = Camera.main;
+            Unit.AuthorityServerOnUnitDespawned += AuthorityHandleUnitDespawned;
+        }
+
+        private void OnDestroy()
+        {
+            Unit.AuthorityServerOnUnitDespawned -= AuthorityHandleUnitDespawned;
+        }
+
+        private void AuthorityHandleUnitDespawned(Unit unit)
+        {
+            SelectedUnits.Remove(unit);
         }
 
         private void Update()
