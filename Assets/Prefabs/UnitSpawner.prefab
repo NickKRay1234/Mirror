@@ -85,6 +85,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  _health: {fileID: 3931817922901364154}
   _unitPrefab: {fileID: 1121750132530550853, guid: a350a9b627efd8e4c8bd01cf0313f66c, type: 3}
   _unitSpawnPoint: {fileID: 1751162216249084307}
 --- !u!114 &8552043998820466395
@@ -285,11 +286,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4672311627806860232, guid: 3288f5c649f10024692866b8f2888785, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4672311627806860232, guid: 3288f5c649f10024692866b8f2888785, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4672311627806860232, guid: 3288f5c649f10024692866b8f2888785, type: 3}
       propertyPath: m_LocalPosition.x
@@ -325,7 +326,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4672311627806860232, guid: 3288f5c649f10024692866b8f2888785, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 4672311627806860232, guid: 3288f5c649f10024692866b8f2888785, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

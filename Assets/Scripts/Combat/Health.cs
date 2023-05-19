@@ -27,8 +27,7 @@ namespace Combat
             _currentHealth = Mathf.Max(_currentHealth - damageAmount, 0);
             if (_currentHealth != 0) return;
             
-            //ServerOnDie?.Invoke();
-            Debug.Log("We Died");
+            ServerOnDie?.Invoke();
         }
         
         #endregion
