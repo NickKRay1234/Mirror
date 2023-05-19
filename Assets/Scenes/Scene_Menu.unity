@@ -176,12 +176,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1147690868646961651, guid: 10450fe6ea5962f438c46032bf30e5dd, type: 3}
       propertyPath: onlineScene
-      value: Assets/Scenes/Strategy.unity
+      value: Assets/Scenes/Scene_Map.unity
       objectReference: {fileID: 0}
     - target: {fileID: 1147690868646961651, guid: 10450fe6ea5962f438c46032bf30e5dd, type: 3}
       propertyPath: offlineScene
       value: Assets/Scenes/Scene_Menu.unity
       objectReference: {fileID: 0}
+    - target: {fileID: 1147690868646961651, guid: 10450fe6ea5962f438c46032bf30e5dd, type: 3}
+      propertyPath: _gameOverHandlerPrefab
+      value: 
+      objectReference: {fileID: 3137422815163165375, guid: 7454ea218182d1649a85c8328a74ce55, type: 3}
     - target: {fileID: 1147690868646961652, guid: 10450fe6ea5962f438c46032bf30e5dd, type: 3}
       propertyPath: m_Name
       value: NetworkManager

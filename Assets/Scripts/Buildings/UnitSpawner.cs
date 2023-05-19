@@ -1,3 +1,4 @@
+using System;
 using Combat;
 using Mirror;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace Buildings
         [SerializeField] private Health _health = null;
         [SerializeField] private GameObject _unitPrefab = null;
         [SerializeField] private Transform _unitSpawnPoint = null;
+
+
 
         #region Server
 
@@ -26,7 +29,7 @@ namespace Buildings
         [Server]
         private void ServerHandleDie()
         {
-            NetworkServer.Destroy(gameObject);
+            //NetworkServer.Destroy(gameObject);
         }
         
         [Command]
