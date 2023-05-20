@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Buildings;
 using Mirror;
 using Networking;
 using UnityEngine;
@@ -20,11 +21,18 @@ namespace Units
         {
             _mainCamera = Camera.main;
             Unit.AuthorityServerOnUnitDespawned += AuthorityHandleUnitDespawned;
+            GameOverHandler.ClientOnGameOver += ClientHandlerGameOver;
         }
 
         private void OnDestroy()
         {
             Unit.AuthorityServerOnUnitDespawned -= AuthorityHandleUnitDespawned;
+            GameOverHandler.ClientOnGameOver -= ClientHandlerGameOver;
+        }
+
+        private void ClientHandlerGameOver(string winnerName)
+        {
+            enabled = false;
         }
 
         private void AuthorityHandleUnitDespawned(Unit unit)

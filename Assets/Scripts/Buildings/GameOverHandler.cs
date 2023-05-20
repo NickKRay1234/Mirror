@@ -6,6 +6,7 @@ namespace Buildings
 {
     public class GameOverHandler : NetworkBehaviour
     {
+        public static event Action ServerOnGameOver;
         public static event Action<string> ClientOnGameOver;
         private List<UnitBase> bases = new();
         
@@ -39,6 +40,7 @@ namespace Buildings
             int playerID = bases[0].connectionToClient.connectionId;
             
             RpcGameOver($"Player {playerID}");
+            ServerOnGameOver?.Invoke();
         }
 
         #endregion

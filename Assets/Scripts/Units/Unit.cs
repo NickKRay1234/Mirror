@@ -1,7 +1,6 @@
 using System;
 using Combat;
 using Mirror;
-using Mirror.Examples.Benchmark.Scripts;
 using UnityEngine;
 using UnityEngine.Events;
 
