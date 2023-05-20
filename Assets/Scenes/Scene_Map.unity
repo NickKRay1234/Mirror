@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 398770029}
   - component: {fileID: 398770028}
   - component: {fileID: 398770027}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,7 +772,7 @@ MonoBehaviour:
   _unitSelectionArea: {fileID: 569287291}
   _layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 256
 --- !u!114 &1849691839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -788,7 +788,7 @@ MonoBehaviour:
   _unitSelectionHandler: {fileID: 1849691838}
   _layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1281
 --- !u!1 &2016209491
 GameObject:
   m_ObjectHideFlags: 0
