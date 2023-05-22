@@ -55,7 +55,7 @@ namespace Units
 
         public override void OnStopClient()
         {
-            if (!isClientOnly || !hasAuthority) return;
+            if (!hasAuthority) return;
             AuthorityServerOnUnitDespawned?.Invoke(this);
         }
         
