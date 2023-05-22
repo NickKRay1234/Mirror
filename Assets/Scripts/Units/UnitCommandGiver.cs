@@ -1,3 +1,5 @@
+using System;
+using Buildings;
 using Combat;
 using UnityEngine;
 
@@ -14,6 +16,12 @@ namespace Units
         private void Start()
         {
             _camera = Camera.main;
+            GameOverHandler.ClientOnGameOver += ClientHandlerGameOver;
+        }
+
+        private void ClientHandlerGameOver(string winnerName)
+        {
+            enabled = false;
         }
 
         private void Update()
@@ -22,7 +30,7 @@ namespace Units
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _layerMask)) return;
 
-            if (hit.collider.TryGetComponent<Targetable>(out Targetable target))
+            if (hit.collider.TryGetComponent(out Targetable target))
             {
                 if (target.hasAuthority)
                 {
@@ -33,6 +41,11 @@ namespace Units
                 return;
             }
             TryMove(hit.point);
+        }
+
+        private void OnDestroy()
+        {
+            GameOverHandler.ClientOnGameOver -= ClientHandlerGameOver;
         }
 
         private void TryTarget(Targetable target)

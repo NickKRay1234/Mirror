@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Generic;
 using Mirror;
-using UnityEngine;
 
 namespace Buildings
 {
     public class GameOverHandler : NetworkBehaviour
     {
-        private List<UnitBase> bases = new List<UnitBase>();
+        public static event Action ServerOnGameOver;
+        public static event Action<string> ClientOnGameOver;
+        private List<UnitBase> bases = new();
         
         
         #region Server
@@ -35,14 +37,21 @@ namespace Buildings
         {
             bases.Remove(unitBase);
             if (bases.Count != 1) return;
-            Debug.Log("Game Over");
+            int playerID = bases[0].connectionToClient.connectionId;
+            
+            RpcGameOver($"Player {playerID}");
+            ServerOnGameOver?.Invoke();
         }
 
         #endregion
 
         #region Client
 
-        
+        [ClientRpc]
+        private void RpcGameOver(string winner)
+        {
+            ClientOnGameOver?.Invoke(winner);
+        }
 
         #endregion
     }

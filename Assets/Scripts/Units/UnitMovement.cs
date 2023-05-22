@@ -1,8 +1,10 @@
-﻿using Combat;
+﻿using Buildings;
+using Combat;
+using Mirror;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Mirror.Examples.Benchmark.Scripts
+namespace Units
 {
     public class UnitMovement : NetworkBehaviour
     {
@@ -12,6 +14,21 @@ namespace Mirror.Examples.Benchmark.Scripts
 
         #region Server
 
+        public override void OnStartServer()
+        {
+            GameOverHandler.ServerOnGameOver += ServerHandleGameOver;
+        }
+
+        [Server]
+        private void ServerHandleGameOver()
+        {
+            _agent.ResetPath();
+        }
+
+        public override void OnStopServer()
+        {
+            GameOverHandler.ServerOnGameOver -= ServerHandleGameOver;
+        }
 
         [ServerCallback]
         private void Update()
