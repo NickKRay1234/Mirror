@@ -1,9 +1,7 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using Mirror;
 using Networking;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Image = UnityEngine.UI.Image;
 
@@ -52,7 +50,7 @@ namespace Buildings
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _floorMask))
             {
-                // place building;
+                _player.CmdTryPlaceBuilding(_building.GetID(), hit.point);
             }
             Destroy(_buildingPreviewInstance);
         }

@@ -8,6 +8,7 @@ namespace Networking
 {
     public class RTSPlayer : NetworkBehaviour
     {
+        [SerializeField] private Building[] _buildings = new Building[0];
         [SerializeField] private List<Unit> myUnits = new();
         private List<Building> myBuildings = new();
 
@@ -35,6 +36,24 @@ namespace Networking
         {
             if (unit.connectionToClient.connectionId != connectionToClient.connectionId) return;
             myUnits.Add(unit);
+        }
+
+        [Command]
+        public void CmdTryPlaceBuilding(int buildingID, Vector3 point)
+        {
+            Building buildingToPlace = null;
+            foreach (Building building in _buildings)
+            {
+                if (building.GetID() == buildingID)
+                {
+                    buildingToPlace = building;
+                    break;
+                }
+            }
+
+            if (buildingToPlace == null) return;
+            GameObject buildingInstance = Instantiate(buildingToPlace.gameObject, point, buildingToPlace.transform.rotation);
+            NetworkServer.Spawn(buildingInstance, connectionToClient);
         }
         
         private void ServerHandleUnitDespawned(Unit unit)
