@@ -20,10 +20,7 @@ namespace Units
         }
 
         [Server]
-        private void ServerHandleGameOver()
-        {
-            _agent.ResetPath();
-        }
+        private void ServerHandleGameOver() => _agent.ResetPath();
 
         public override void OnStopServer()
         {
@@ -34,7 +31,7 @@ namespace Units
         private void Update()
         {
             Targetable target = _targeter.GetTarget();
-            if (_targeter.GetTarget() != null)
+            if (target != null)
             {
                 if ((target.transform.position - transform.position).sqrMagnitude > _chaseRange * _chaseRange)
                     _agent.SetDestination(target.transform.position);
@@ -48,7 +45,13 @@ namespace Units
         }
         
         [Command]
-        public void Move(Vector3 position)
+        public void CmdMove(Vector3 position)
+        {
+            ServerMove(position);
+        }
+
+        [Server]
+        public void ServerMove(Vector3 position)
         {
             _targeter.ClearTarget();
             if(!NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, NavMesh.AllAreas)) return;

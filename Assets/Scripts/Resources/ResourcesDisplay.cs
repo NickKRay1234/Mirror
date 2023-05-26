@@ -1,4 +1,3 @@
-using System;
 using Mirror;
 using Networking;
 using TMPro;
@@ -8,27 +7,41 @@ namespace Resources
 {
     public class ResourcesDisplay : MonoBehaviour
     {
-        [SerializeField] private TMP_Text _resourcesText = null;
-        private RTSPlayer _player;
+        [SerializeField] private TMP_Text resourcesText = null;
+
+        private RTSPlayer player;
+
+        // private void Start()
+        // {
+        //     player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+        //     ClientHandleResourcesUpdated(player.GetResources());
+        //     player.ClientOnResourcesUpdated += ClientHandleResourcesUpdated;
+        // }
 
         private void Update()
         {
-            if (_player == null)
+            if (player == null)
             {
-                _player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-                if (_player != null)
+                player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+
+                if(player != null)
                 {
-                    ClientHandleResourcesUpdated(_player.GetResources());
-                    _player.ClientOnResourcesUpdated += ClientHandleResourcesUpdated;
+                    ClientHandleResourcesUpdated(player.GetResources());
+
+                    player.ClientOnResourcesUpdated += ClientHandleResourcesUpdated;
                 }
             }
-            
+        }
+    
+        private void OnDestroy()
+        {
+            player.ClientOnResourcesUpdated -= ClientHandleResourcesUpdated;
         }
 
-        private void OnDestroy() => 
-            _player.ClientOnResourcesUpdated -= ClientHandleResourcesUpdated;
+        private void ClientHandleResourcesUpdated(int resources)
+        {
+            resourcesText.text = $"Resources: {resources}";
+        }
 
-        private void ClientHandleResourcesUpdated(int resources) =>
-            _resourcesText.text = $"Resources: {resources}";
     }
 }

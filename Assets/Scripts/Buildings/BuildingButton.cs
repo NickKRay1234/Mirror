@@ -22,6 +22,10 @@ namespace Buildings
         private void Start()
         {
             _camera = Camera.main;
+            
+            _iconImage.sprite = _building.GetIcon();
+            _priceText.text = _building.GetPrice().ToString();
+
         }
 
         private void Update()
