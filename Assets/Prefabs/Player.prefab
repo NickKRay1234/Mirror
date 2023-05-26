@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1407411539865241542}
   - component: {fileID: 5456363953208648146}
   m_Layer: 0
-  m_Name: Player 1
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,4 +67,5 @@ MonoBehaviour:
   syncInterval: 0
   _buildings:
   - {fileID: 6301506280407741754, guid: 68658fbcda95d9c49bc6b4c373cf9863, type: 3}
+  - {fileID: 6301506280407741754, guid: 2f8d4346709b7af43aa52474e1089686, type: 3}
   myUnits: []
