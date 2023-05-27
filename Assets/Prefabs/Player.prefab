@@ -68,4 +68,8 @@ MonoBehaviour:
   _buildings:
   - {fileID: 6301506280407741754, guid: 68658fbcda95d9c49bc6b4c373cf9863, type: 3}
   - {fileID: 6301506280407741754, guid: 2f8d4346709b7af43aa52474e1089686, type: 3}
+  _buildingBlockLayer:
+    serializedVersion: 2
+    m_Bits: 321
+  _buildingRangeLimit: 5
   myUnits: []

@@ -10,6 +10,8 @@ namespace Networking
     public class RTSPlayer : NetworkBehaviour
     {
         [SerializeField] private Building[] _buildings = new Building[0];
+        [SerializeField] private LayerMask _buildingBlockLayer = new LayerMask();
+        [SerializeField] private float _buildingRangeLimit = 5f;
 
         [SyncVar(hook = nameof(ClientHandleResourcesUpdated))]
         private int _resources = 500;
@@ -45,6 +47,18 @@ namespace Networking
             myUnits.Add(unit);
         }
 
+        public bool CanPlaceBuilding(BoxCollider buildingCollider, Vector3 point)
+        {
+            if(Physics.CheckBox(point + buildingCollider.center, buildingCollider.size / 2, Quaternion.identity, _buildingBlockLayer)) 
+                return false;
+            
+            foreach (Building building in myBuildings)
+                if ((point - building.transform.position).sqrMagnitude <= _buildingRangeLimit * _buildingRangeLimit) 
+                    return true;
+
+            return false;
+        }
+
         [Command]
         public void CmdTryPlaceBuilding(int buildingID, Vector3 point)
         {
@@ -59,8 +73,12 @@ namespace Networking
             }
 
             if (buildingToPlace == null) return;
+            if (_resources < buildingToPlace.GetPrice()) return;
+            BoxCollider buildingCollider = buildingToPlace.GetComponent<BoxCollider>();
+            if (!CanPlaceBuilding(buildingCollider, point)) return;
             GameObject buildingInstance = Instantiate(buildingToPlace.gameObject, point, buildingToPlace.transform.rotation);
             NetworkServer.Spawn(buildingInstance, connectionToClient);
+            SetResources(_resources - buildingToPlace.GetPrice());
         }
         
         private void ServerHandleUnitDespawned(Unit unit)
