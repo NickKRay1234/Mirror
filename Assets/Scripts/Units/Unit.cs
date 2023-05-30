@@ -8,11 +8,14 @@ namespace Units
 {
     public class Unit : NetworkBehaviour
     {
+        [SerializeField] private int _resourceCost = 10;
         [SerializeField] private Health _health = null;
         [SerializeField] private UnitMovement _unitMovement = null;
         [SerializeField] private Targeter _targeter = null;
         [SerializeField] private UnityEvent onSelected = null;
         [SerializeField] private UnityEvent onDeselected = null;
+
+        public int GetResourceCost() => _resourceCost;
 
         public static event Action<Unit> ServerOnUnitSpawned; 
         public static event Action<Unit> ServerOnUnitDespawned;

@@ -10,14 +10,19 @@ namespace Networking
     public class RTSPlayer : NetworkBehaviour
     {
         [SerializeField] private Building[] _buildings = new Building[0];
+        [SerializeField] private LayerMask _buildingBlockLayer = new LayerMask();
+        [SerializeField] private float _buildingRangeLimit = 5f;
 
         [SyncVar(hook = nameof(ClientHandleResourcesUpdated))]
         private int _resources = 500;
 
         public event Action<int> ClientOnResourcesUpdated;
-        
+
+        private Color _teamColor = new Color();
         [SerializeField] private List<Unit> myUnits = new();
         private List<Building> myBuildings = new();
+
+        public Color GetTeamColor() => _teamColor;
 
         public List<Unit> GetMyUnits() => myUnits;
 
@@ -45,6 +50,18 @@ namespace Networking
             myUnits.Add(unit);
         }
 
+        public bool CanPlaceBuilding(BoxCollider buildingCollider, Vector3 point)
+        {
+            if(Physics.CheckBox(point + buildingCollider.center, buildingCollider.size / 2, Quaternion.identity, _buildingBlockLayer)) 
+                return false;
+            
+            foreach (Building building in myBuildings)
+                if ((point - building.transform.position).sqrMagnitude <= _buildingRangeLimit * _buildingRangeLimit) 
+                    return true;
+
+            return false;
+        }
+
         [Command]
         public void CmdTryPlaceBuilding(int buildingID, Vector3 point)
         {
@@ -59,8 +76,12 @@ namespace Networking
             }
 
             if (buildingToPlace == null) return;
+            if (_resources < buildingToPlace.GetPrice()) return;
+            BoxCollider buildingCollider = buildingToPlace.GetComponent<BoxCollider>();
+            if (!CanPlaceBuilding(buildingCollider, point)) return;
             GameObject buildingInstance = Instantiate(buildingToPlace.gameObject, point, buildingToPlace.transform.rotation);
             NetworkServer.Spawn(buildingInstance, connectionToClient);
+            SetResources(_resources - buildingToPlace.GetPrice());
         }
         
         private void ServerHandleUnitDespawned(Unit unit)
@@ -80,6 +101,13 @@ namespace Networking
             if (building.connectionToClient.connectionId != connectionToClient.connectionId) return;
             myBuildings.Remove(building);
         }
+        
+        [Server]
+        public void SetTeamColor(Color newTeamColor) => _teamColor = newTeamColor;
+
+        [Server]
+        public void SetResources(int newResources) => _resources = newResources;
+        public int GetResources() => _resources;
 
         #region Client
 
@@ -115,10 +143,7 @@ namespace Networking
         private void AuthorityHandleBuildingDespawned(Building building) => myBuildings.Remove(building);
 
         #endregion
-
-        public int GetResources() => _resources;
-
-        [Server]
-        public void SetResources(int newResources) => _resources = newResources;
+        
+        
     }
 }

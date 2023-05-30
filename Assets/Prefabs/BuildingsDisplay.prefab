@@ -229,6 +229,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildingButton (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6234752232934230677, guid: 8ced7debcf3ff3448bbe83a5b5ed1507, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2413806693520163455, guid: 466cfdcc2f112e34bbd327abe05c0f4c, type: 3}
     - target: {fileID: 7966636353543442593, guid: 8ced7debcf3ff3448bbe83a5b5ed1507, type: 3}
       propertyPath: _building
       value: 
@@ -335,6 +339,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildingButton
       objectReference: {fileID: 0}
+    - target: {fileID: 6234752232934230677, guid: 8ced7debcf3ff3448bbe83a5b5ed1507, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2413806693520163455, guid: 466cfdcc2f112e34bbd327abe05c0f4c, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ced7debcf3ff3448bbe83a5b5ed1507, type: 3}
 --- !u!224 &7697884144270891064 stripped

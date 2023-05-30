@@ -60,7 +60,7 @@ namespace Units
         {
             foreach (Unit unit in _unitSelectionHandler.SelectedUnits)
             {
-                unit.GetUnitMovement().Move(hitInfoPoint);
+                unit.GetUnitMovement().CmdMove(hitInfoPoint);
             }
         }
     }
