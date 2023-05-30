@@ -67,6 +67,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  _cameraTransform: {fileID: 524070793865150869}
   _buildings:
   - {fileID: 6301506280407741754, guid: 68658fbcda95d9c49bc6b4c373cf9863, type: 3}
   - {fileID: 6301506280407741754, guid: 2f8d4346709b7af43aa52474e1089686, type: 3}

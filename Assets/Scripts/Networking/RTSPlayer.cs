@@ -9,6 +9,7 @@ namespace Networking
 {
     public class RTSPlayer : NetworkBehaviour
     {
+        [SerializeField] private Transform _cameraTransform = null;
         [SerializeField] private Building[] _buildings = new Building[0];
         [SerializeField] private LayerMask _buildingBlockLayer = new LayerMask();
         [SerializeField] private float _buildingRangeLimit = 5f;
@@ -41,6 +42,8 @@ namespace Networking
             Building.ServerOnBuildingSpawned -= ServerHandleBuildingSpawned;
             Building.ServerOnBuildingDespawned -= ServerHandleBuildingDespawned;
         }
+
+        public Transform GetCameraTransform() => _cameraTransform;
 
         public List<Building> GetMyBuildings() => myBuildings;
 
