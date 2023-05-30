@@ -176,6 +176,7 @@ MonoBehaviour:
   syncInterval: 0
   colorRenderers:
   - {fileID: 2777377202763735349}
+  - {fileID: 0}
 --- !u!1 &8242387997754017585
 GameObject:
   m_ObjectHideFlags: 0
