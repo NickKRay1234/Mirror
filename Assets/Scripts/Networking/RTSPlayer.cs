@@ -17,13 +17,25 @@ namespace Networking
         [SyncVar(hook = nameof(ClientHandleResourcesUpdated))]
         private int _resources = 500;
 
+        [SyncVar(hook = nameof(AuthorityHandlePartyOwnerStateUpdated))]
+        private bool isPartyOwner = false;
+
+        [SyncVar(hook = nameof(ClientHandleDisplayNameUpdated))] 
+        private string _displayName;
+
         public event Action<int> ClientOnResourcesUpdated;
+        public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
+
+        public static event Action ClientOnInfoUpdated;
 
         private Color _teamColor = new Color();
         [SerializeField] private List<Unit> myUnits = new();
         private List<Building> myBuildings = new();
 
         public Color GetTeamColor() => _teamColor;
+
+        public bool GetIsPartyOwner() => isPartyOwner;
+        public string GetDisplayName() => _displayName;
 
         public List<Unit> GetMyUnits() => myUnits;
 
@@ -33,6 +45,7 @@ namespace Networking
             Unit.ServerOnUnitDespawned += ServerHandleUnitDespawned;
             Building.ServerOnBuildingSpawned += ServerHandleBuildingSpawned;
             Building.ServerOnBuildingDespawned += ServerHandleBuildingDespawned;
+            DontDestroyOnLoad(gameObject);
         }
 
         public override void OnStopServer()
@@ -104,6 +117,38 @@ namespace Networking
             if (building.connectionToClient.connectionId != connectionToClient.connectionId) return;
             myBuildings.Remove(building);
         }
+
+        public override void OnStartClient()
+        {
+            if (NetworkServer.active) return;
+            DontDestroyOnLoad(gameObject);
+            ((RTSNetworking)NetworkManager.singleton).Players.Add(this);
+        }
+
+        [Server]
+        public void SetPartyOwner(bool state)
+        {
+            isPartyOwner = state;
+        }
+
+        [Server]
+        public void SetDisplayName(string displayName)
+        {
+            _displayName = displayName;
+        }
+
+        private void AuthorityHandlePartyOwnerStateUpdated(bool oldState, bool newState)
+        {
+            if (!hasAuthority) return;
+            AuthorityOnPartyOwnerStateUpdated?.Invoke(newState);
+        }
+
+        [Command]
+        public void CmdStartGame()
+        {
+            if (!isPartyOwner) return;
+            ((RTSNetworking)NetworkManager.singleton).StartGame();
+        }
         
         [Server]
         public void SetTeamColor(Color newTeamColor) => _teamColor = newTeamColor;
@@ -123,9 +168,17 @@ namespace Networking
             Building.AuthorityOnBuildingDespawned += AuthorityHandleBuildingDespawned;
         }
 
+        private void ClientHandleDisplayNameUpdated(string oldDisplayName, string newDisplayName)
+        {
+            ClientOnInfoUpdated?.Invoke();
+        }
+
         public override void OnStopClient()
         {
-            if (!isClientOnly || !hasAuthority) return;
+            ClientOnInfoUpdated?.Invoke();
+            if (!isClientOnly) return;
+            ((RTSNetworking)NetworkManager.singleton).Players.Remove(this);
+            if (!hasAuthority) return;
             Unit.AuthorityServerOnUnitSpawned -= AuthorityHandleUnitSpawned;
             Unit.AuthorityServerOnUnitDespawned -= AuthorityHandleUnitDespawned;
             Building.AuthorityOnBuildingSpawned -= AuthorityHandleBuildingSpawned;

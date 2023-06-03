@@ -11,28 +11,13 @@ namespace Resources
 
         private RTSPlayer player;
 
-        // private void Start()
-        // {
-        //     player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-        //     ClientHandleResourcesUpdated(player.GetResources());
-        //     player.ClientOnResourcesUpdated += ClientHandleResourcesUpdated;
-        // }
-
-        private void Update()
+        private void Start()
         {
-            if (player == null)
-            {
-                player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-
-                if(player != null)
-                {
-                    ClientHandleResourcesUpdated(player.GetResources());
-
-                    player.ClientOnResourcesUpdated += ClientHandleResourcesUpdated;
-                }
-            }
+            player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+            ClientHandleResourcesUpdated(player.GetResources());
+            player.ClientOnResourcesUpdated += ClientHandleResourcesUpdated;
         }
-    
+
         private void OnDestroy()
         {
             player.ClientOnResourcesUpdated -= ClientHandleResourcesUpdated;

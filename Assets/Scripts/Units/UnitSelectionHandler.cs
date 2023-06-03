@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Buildings;
 using Mirror;
@@ -22,6 +21,7 @@ namespace Units
             _mainCamera = Camera.main;
             Unit.AuthorityServerOnUnitDespawned += AuthorityHandleUnitDespawned;
             GameOverHandler.ClientOnGameOver += ClientHandlerGameOver;
+            _player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         }
 
         private void OnDestroy()
@@ -42,8 +42,6 @@ namespace Units
 
         private void Update()
         {
-            if (_player == null)
-                _player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
             if (Input.GetMouseButtonDown(0))
             {
                 StartSelectionArea();
